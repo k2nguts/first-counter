@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+contract deneme{
+   address owner;
+
+struct Counter {
+    uint number;
+    string description;
+}
+ Counter  counter;
+
+modifier OnlyOwner(){
+    require(msg.sender == owner, "sadece sahip yapabilir");    
+    _;
+}
+constructor(uint initialvalue , string memory description){
+    owner = msg.sender ;
+    counter = Counter(initialvalue,description);
+
+}
+function increasenumb() external OnlyOwner{
+    counter.number += 1 ;
+}
+function decreasenumb() external OnlyOwner{
+    counter.number -= 1;
+}
+ function getdata() external view returns(uint){
+   return counter.number; 
+}
+
+function getdescription() external view returns(string memory){
+    return counter.description;
+}
+
+
+
+}
