@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.18;
+contract ProposalContract {
+    struct Proposal {
+        string description;//açıklama
+        uint256 approve;//numb of approve vote
+        uint256 reject; //numb of reject vote
+        uint256 pass ; //numb of pass vote
+        uint256 total_vote_end; // alinabilecek maks vote
+        bool current_state; //calisip calismadigini gosterir
+        bool is_active; //baskalarinin vote verip vermedigini gosterir
+        string titlefield; //title of decription
+        
+    }
+   mapping(uint256 => Proposal) proposal_history; //record proposal history
+
+}
