@@ -16,8 +16,8 @@ constructor(){
         require(proposal_history[counter].is_active==true, "this is not active");
         _;
     }
-    modifier newvoter(){
-        require(!isVoted(address),"already voted");
+    modifier newvoter(address _address){
+        require(!isVoted(_address),"already voted");
         _;
     }
     address[] private voted_addresses;
@@ -63,7 +63,27 @@ function calculateCurrentState() private view returns(bool) {
         return false;
     }
 } 
+function teminateProposal() external Onlyowner active { //teklifi sonlandirir
+    proposal_history[counter].is_active = false;
+}
+function isVoted(address _address) public view returns(bool) {
+    for (uint i =0 ; i < voted_addresses.length; i++) {
+        if (voted_addresses[i]== _address){
+return true ;
+        }
+        
+    
+    }
+return false;
+}
+function getcurrentProposal() external view returns(Proposal memory) {
+    return proposal_history[counter];
+}
 
+function getProposal(uint256 number) external view returns (Proposal memory)
+{
+    return proposal_history[number];
+}
 function vote(uint8 choice) external {
 Proposal storage proposal = proposal_history[counter];
 uint256 total_vote = proposal.approve + proposal.reject + proposal.pass;
@@ -77,7 +97,7 @@ else if (choice==2){
     proposal.current_state = calculateCurrentState();
 
 }
-else if (choice =0){
+else if (choice == 0){
     proposal.pass += 1;
     proposal.current_state = calculateCurrentState();
 
